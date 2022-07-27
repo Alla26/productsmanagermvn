@@ -9,12 +9,12 @@ public class ProductManagerTest {
     ProductRepository repo = new ProductRepository();
     ProductManager manager = new ProductManager(repo);
 
-    Product product1 = new Book(0, "Книга1", 1000, "Автор1");
-    Product product2 = new Book(1, "Книга1", 10, "Автор2");
-    Product product3 = new Book(2, "Книга3", 400, "Автор3");
-    Product product4 = new Smartphone(3, "Телефон1", 15_000, "Производитель1");
-    Product product5 = new Smartphone(4, "Телефон2", 60_000, "Производитель2");
-    Product product6 = new Smartphone(5, "Телефон3", 100_000, "Производитель3");
+    Product product1 = new ru.netology.domain.Book(0, "Книга1", 1000, "Автор1");
+    Product product2 = new ru.netology.domain.Book(1, "Книга1", 10, "Автор2");
+    Product product3 = new ru.netology.domain.Book(2, "Книга3", 400, "Автор3");
+    Product product4 = new ru.netology.domain.Smartphone(3, "Телефон1", 15_000, "Производитель1");
+    Product product5 = new ru.netology.domain.Smartphone(4, "Телефон2", 60_000, "Производитель2");
+    Product product6 = new ru.netology.domain.Smartphone(5, "Телефон3", 100_000, "Производитель3");
 
     @BeforeEach
     public void setup() {
@@ -53,6 +53,39 @@ public class ProductManagerTest {
 
         Product[] expected = {product1, product2};
         Product[] actual = manager.searchBy("Книга1");
+
+
+        Assertions.assertArrayEquals(expected, actual);
+
+    }
+
+    @Test
+    public void shouldFindProductsOtherType() {
+
+        Product[] expected = {product6};
+        Product[] actual = manager.searchBy("Телефон3");
+
+
+        Assertions.assertArrayEquals(expected, actual);
+
+    }
+
+    @Test
+    public void shouldFindProductForManufacturer() {
+
+        Product[] expected = {product5};
+        Product[] actual = manager.searchBy("Производитель2");
+
+
+        Assertions.assertArrayEquals(expected, actual);
+
+    }
+
+    @Test
+    public void shouldFindProductForAuthor() {
+
+        Product[] expected = {product3};
+        Product[] actual = manager.searchBy("Автор3");
 
 
         Assertions.assertArrayEquals(expected, actual);
